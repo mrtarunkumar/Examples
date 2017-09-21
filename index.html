@@ -1,0 +1,194 @@
+<!-- Example 1 -->
+<!-- New Button and Status Check -->
+<style>
+    @media screen and (min-width:1060px) {
+        .income {
+            display: none;
+        }
+    }
+    
+    @media screen and (max-width:800px) and (min-width:360px) {
+        .income {
+            display: none;
+        }
+    }
+
+</style>
+
+<script>
+    // insertafter function
+    function insertAfter(referenceNode, newNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+
+    document.addEventListener('DOMContentLoaded', function(e) {
+        let a = document.createElement('span'); //create new span to hold a button
+        let c = document.createAttribute('role');
+        let d = document.createAttribute('data-hook');
+        d.value = "tooltip_search-credit-cards_salary"
+        c.value = "tooltip";
+        a.setAttributeNode(c); //adding attribute value 'role' to span
+        a.setAttributeNode(d); //adding attribute value 'data-hook' to span
+        let b = '<button class="js-tooltip__link tooltip__link tooltip__link--disabled" type="button">i</button><span class="visuallyhidden">More information</span><div class="js-tooltip__content tooltip__content tooltip__content--closed"><div class="js-tooltip__copy tooltip__copy tooltip__copy--closed"><p class="tooltip__title">Annual Income</p><p class="tooltip__paragraph">Your total annual personal income (before tax). If you think your income might decrease in the next 12 months, please give the lower figure.</p></div><span class="js-tooltip__arrow tooltip__arrow"></span><button class="js-tooltip__close tooltip__close"><img alt="Close tooltip" src="https://expcdn.co.uk/c2/assets/img/close-grey.svg"></button></div></span>'
+        a.classList.add('tooltip', 'js-tooltip', 'tooltip--closed'); // adding button&classes inside span
+        a.innerHTML = b; // adding buton(s) to span
+        insertAfter(document.querySelector('label[for="Applicant.AnnualIncome"]'), a); // calling function insertafter and passing reference node and new node 'span'
+        document.querySelector('label[for="Applicant.AnnualIncome"]').innerHTML = "What's your total annual <br class='income'>personal income?"; //change text
+
+        let q = document.querySelectorAll('[data-hook="tooltip_search-credit-cards_salary"] button'); // find button
+
+
+        for (let i = 0; i < q.length; i++) {
+            q[i].addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('[data-hook="tooltip_search-credit-cards_salary"] button')[0].classList.toggle('tooltip__link--disabled'); //check class and toggle 
+                document.querySelectorAll('[data-hook="tooltip_search-credit-cards_salary"] button')[0].classList.toggle('tooltip__link--enabled');
+                document.querySelector('[data-hook=tooltip_search-credit-cards_salary] .tooltip__content').classList.toggle('tooltip__content--closed'); // check class and toggle
+                document.querySelector('[data-hook=tooltip_search-credit-cards_salary] .tooltip__content').classList.toggle('tooltip__content--open');
+                document.querySelector('[data-hook=tooltip_search-credit-cards_salary] .tooltip__copy').classList.toggle('tooltip__copy--closed'); //check class and toggle
+                document.querySelector('[data-hook=tooltip_search-credit-cards_salary] .tooltip__copy').classList.toggle('tooltip__copy--open');
+            });
+        };
+        document.querySelector('[data-hook="search-submit"]').addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            alert("mboxTrack('SeeYourMatchedResults:clicked')");
+        });
+
+        document.querySelector('[data-hook="tooltip_search-credit-cards_salary"] .js-tooltip__link.tooltip__link.tooltip__link--disabled').addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            //check if tooltip closed otherwise we count open and close clicks
+            if (e.target.classList.contains('tooltip__link--disabled')) {
+                alert("mboxTrack('salaryTooltip:clicked')");
+            };
+        });
+    });
+
+</script>
+
+
+
+<!-- Example 2 -->
+<!-- Feature resize -->
+<style>
+    /* Start Adobe CCS */
+    
+    .features li {
+        position: relative;
+        padding-left: 2em;
+        padding-bottom: 0.5em;
+    }
+    
+    .features li::before {
+        content: '';
+        position: absolute;
+        width: 2em;
+        height: 100%;
+        top: 6px;
+        left: 0;
+        background-image: url(tick.png);
+        background-size: 1em 1em;
+        background-repeat: no-repeat;
+        background-position: top;
+        vertical-align: top;
+    }
+    
+    .cookie-hide {
+        display: none;
+    }
+    
+    @media (min-width: 800px) {
+        .features-fixed {
+            position: fixed;
+            top: 20px;
+        }
+        .cookie-hide {
+            display: block;
+        }
+        .features-abso {
+            position: absolute;
+        }
+    }
+    
+    @media (max-width: 800px) {
+        .form-margin {
+            margin-bottom: 0;
+        }
+    }
+    /* End Adobe CCS */
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        let sidebar = document.getElementsByClassName('l-sidebar')[0],
+            login = document.querySelectorAll('.l-sidebar div.panel')[0],
+            features = document.querySelectorAll('.l-sidebar div.panel')[1],
+            list = document.createElement('UL'),
+            deleteP = features.querySelector('p'),
+            featuresP = document.querySelector('.map-footer'),
+            form = document.querySelector('.l-content :nth-child(6)');
+
+        //Style and position
+        sidebar.classList.remove('hide-default');
+        sidebar.classList.remove('hide-bp10');
+        sidebar.classList.remove('hide-bp15');
+        login.classList.add('hide-default');
+        login.classList.add('hide-bp10');
+        login.classList.add('hide-bp15');
+        login.style.marginTop = '1.5em';
+        features.classList.remove('l-most-trusted-map');
+        features.classList.add('features');
+        features.appendChild(list);
+        features.style.background = '#ffffff';
+        features.style.border = '2px solid #406eb3';
+        features.style.borderRadius = '.375em';
+        deleteP.parentNode.removeChild(deleteP);
+        featuresP.innerHTML = '<strong>What you get</strong>';
+        featuresP.style.marginBottom = '1em';
+        list.innerHTML = '<li>Credit Report</li><li>Credit Score</li><li>Tips on how to improve your score</li><li>Daily score updates</li><li>UK call support</li><li>Credit Report alerts</li><li>Victim of fraud support</li>';
+        form.nextElementSibling.classList.add('cookie-hide');
+        document.querySelector('.l-content p:last-child').classList.add('cookie-hide');
+        document.querySelector('.l-content').classList.add('form-margin');
+
+        //Apply sticky classes to features
+        window.addEventListener('scroll', function() {
+
+            let pageHeight = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop,
+                pageWidth = window.outerWidth,
+                formTop = form.offsetTop + form.offsetHeight - features.offsetHeight;
+            console.log('h ' + pageHeight);
+            console.log('w ' + pageWidth);
+
+            if (pageHeight > 500 && pageHeight < 1000 && pageWidth > 800) {
+                features.classList.add('features-fixed');
+                features.classList.remove('features-abso');
+                features.style.top = '20px';
+
+            } else if (pageHeight > 1000 && pageWidth > 800) {
+                features.classList.add('features-abso');
+                features.style.top = formTop + 'px';
+            } else {
+                features.classList.remove('features-fixed');
+                features.classList.remove('features-abso');
+                features.style.top = 'auto';
+            }
+        });
+
+        //Keep width of features same as login
+        let loginWidth = login.offsetWidth;
+        features.style.width = loginWidth + 'px';
+
+        window.addEventListener('resize', function() {
+            loginWidth = login.offsetWidth;
+
+            if (loginWidth > 0) {
+                features.style.width = loginWidth + 'px';
+            } else {
+                features.style.width = 'auto';
+            }
+        });
+
+    });
+
+</script>
